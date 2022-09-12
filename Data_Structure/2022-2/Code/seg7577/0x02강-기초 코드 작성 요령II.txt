@@ -1,0 +1,22 @@
+정리
+-표준 입출력
+
+	공백을 포함한 문자열을 입력 받고 싶을 때는 getline 함수를 이용한다. type이 c++ string일 경우에만 사용 가능
+	ex) string s;
+	     getline(cin, s);
+	     cout << s;
+	아니면 scanf("%[^\n]",a)를 사용하여 입력을 받는다
+	ex) char a1[10];
+	     scanf("%[^\n]", a);
+
+	ios::sync_with_stdio(0), cin.tie(0)
+		cin과cout을 사용할 때 시간초과를 막기 위해서 사용함
+		c stream과 c++ stream을 동기화 하고 있음. 예를 들어 c++ stream만 사용하는데 c stream까지 동기화를 하고 있으면 시간을 잡아 먹기 때문에
+		시간을 절약하고자 ios::sync_with_stdio(0), cin.tie(0) 을 사용하여 동기화를 끊어준다.
+		주의 : 동기화를 끊었으면 절대 cout과 printf를 섞어 쓰면 안된다.
+
+	cin.tie(0)
+		버퍼에 대한 개념 간략하게 설명
+		버퍼의 순서가 꼬이는 것을 막기 위해 cin을 사용 전에 cout의 버퍼를 비워 꼬이는 것을 방지한다
+		cin 명령을 수행하기 전에 cout 버퍼를 비우지 않도록 하는 코드가 cin.tie(nullptr)이다. 귀찮으니까 0으로 표현한다.
+	
