@@ -1,0 +1,19 @@
+#include iostream
+#include algorithm
+#includevector
+#includestring
+
+using namespace std;
+int cnt = 0;
+int arry[30] = {};
+int main()
+{
+	string str;
+	cin  str;
+	for (int i = 0; i  str.size(); i++)
+		arry[str[i] - 'a']++;
+	for (int i = 0; i  26; i++)
+		cout  arry[i]  ' ';
+}
+
+
