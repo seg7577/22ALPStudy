@@ -1,0 +1,103 @@
+#include <iostream>
+#include <algorithm>
+#include<vector>
+#include<string>
+
+
+using namespace std;
+int cnt[10] = {};
+int set = 1, i = 0;
+//int password;
+int x;
+int main()
+{
+	string number;//문자열로 입력을 받을 예정
+	char password [10] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	int check [10];
+	int ans = 1;
+
+	for (int i = 0; i < 10; i++)
+		check[i] = 1000000;
+
+	cin >> number;//비밀번호를 문자열로 입력을 받음
+
+	for (int i = 0; i < number.length(); i++) //문자열의 길이만큼 반복
+	{
+		for (int j = 0; j < 10; j++) 
+		{
+			if (number[i] == password[j]) //i번째부터 하나씩 대조 시작.
+			{
+				if (password[j] == '6' or password[j] == '9') //6과 9는 동일한 문자로 인식. 
+				{
+						if (check[6] > check[9]) //둘중에 하나라도 한번씩 나온게 있으면 그것을 피하고 -1로 저장해서 중복 되지 않게 저장
+							check[6]--;
+
+						else if (check[6] <= check[9]) //2개 다 1번이라도 나왔거나 아예 처음일 경우 9를 우선으로  -1로 저장
+							check[9]--;
+				}
+				else  //6과 9가 아닌 나머지 숫자들 연산
+					check[j]--;
+			}
+
+		}
+	}
+		sort(check, check + 10); //정렬해서 숫자 세트를 가장 적게 쓴 경우를 출력 sort를 오름차순으로 정렬.
+		cout << 1000000 - check[0];
+		return 0;
+}
+	/*
+	while (cin.eof() >> password[i])//값이 종료될 때까지 입력을 받는 것
+
+	for (int i = 0; i < 4; i++) //테스트를 위한 입력문
+		password[i] = 9;
+
+	//	i++;
+	*/
+	/*
+	* 	while (password > 0)
+	{
+		password2[i] = password % 10;
+		password /= 10;
+		i++;
+	}
+	i = 0;
+	while (password2[i] != 0) //예외 경우인 6과 9를 위해 따로 조건을 설정해준다
+	{
+		cnt[password2[i]]++;//cnt값을 9까지 돌리며 중복된 숫자가 2개 이상 나올시 바로 stack을 쌓는다
+		if (password2[i] == 6 && cnt[password2[i]] == 2)
+		{
+			if (cnt[9] < 1) //9가 한 번도 나오지 않았을 경우
+			{
+				cnt[9] = 1;//대체 가능 문자이므로 6대신 9를 +해줌
+				cnt[6] = 1;
+			}
+			else//9가 1번이라도 나왔을 경우 6을 0으로 초기화 하고 총 set++ 해준다.
+			{
+				cnt[6] = 0;
+				set++;
+			}
+		}
+		if (password2[i] == 9 && cnt[password2[i]] == 2)
+		{
+			if (cnt[6] < 1) //6이 한 번도 나오지 않았을 경우
+			{
+				cnt[9] = 1;//대체 가능 문자이므로 9대신 6을 +해줌
+				cnt[6] = 1;
+			}
+			else//6이 1번이라도 나왔을 경우 9을 0으로 초기화 하고 총 set++ 해준다.
+			{
+				cnt[9] = 0;
+				set++;
+			}
+		}
+		if (cnt[password2[i]] == 2)
+		{
+			cnt[password2[i]] = 1;//중복된 숫자가 나올 경우 초기화 이후 총 set++을 해준다
+			set++;
+		}
+		i++;
+	}
+	
+	cout << set;
+	return 0;
+	*/

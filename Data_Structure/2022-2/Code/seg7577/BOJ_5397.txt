@@ -1,0 +1,61 @@
+#include <iostream>
+#include <algorithm>
+#include<stack>
+#include<string>
+using namespace std;
+
+int main()
+{
+	stack<char> str1, str2;
+	string key;	
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> key;
+		
+		for (int j = 0; j < key.size(); j++)
+		{
+			char c = key.at(j);
+
+			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+				str1.push(c);
+			//입력 조건에 맞게 조건 설정 이후 입력 틀과 동일하다면 str push
+
+			if (c == '<' && !str1.empty())
+			{
+				str2.push(str1.top()); //더 왼쪽으로 넣음
+				str1.pop();			   //이후 넣은 문자는 삭제함
+			}
+			//입력된 글자 = < 이면 스택1이 비어있는지 확인하고 차있으면(= 커서를 움직일 수 있다면) 왼쪽으로 이동시킨다.
+
+			if (c == '>' && !str2.empty())
+			{
+				str1.push(str2.top());
+				str2.pop();
+			}
+			//입력된 글자 = > 이면 스택2가 비어있는지 확인하고 차있으면(= 오른쪽으로 커서를 움직일 수 있다면) 오른쪽으로 이동시킨다.
+
+			if (c == '-' && !str1.empty())
+				str1.pop();
+			//커서 앞에 숫자가 있을 경우 빼기 위함
+
+		}
+			while (!str1.empty())//순서대로 출력하기 위해 str2로 옮기면서 정렬하는 느낌.
+			{
+				str2.push(str1.top());
+				str1.pop();
+			}
+
+			while (!str2.empty())//순서대로 출력,
+			{
+				cout << str2.top();
+				str2.pop();
+			}
+		
+		cout << '\n';
+	
+	}
+
+	return 0;
+}

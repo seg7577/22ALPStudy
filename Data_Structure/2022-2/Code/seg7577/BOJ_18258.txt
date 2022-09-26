@@ -1,0 +1,96 @@
+#include <iostream>
+//#include <algorithm>
+#include<stack>
+#include<queue>
+//#include<string>
+//#include<list>
+using namespace std;
+
+int main()
+{
+	cin.tie(NULL);
+	cin.sync_with_stdio(false);
+	queue<int>q;
+	string order;
+	long long int n, sum, x;
+	cin >> n;
+
+	while (n--)
+	{
+		cin >> order;
+		if (order == "push")
+		{
+			cin >> sum;
+			q.push(sum);
+			continue;
+		}
+		else if (order == "pop")
+		{
+			if (!q.empty())
+			{
+				x = q.front();
+				q.pop();
+				cout << x << '\n';
+				continue;
+			}
+			else
+			{
+				cout << -1 << '\n';
+				continue;
+			}
+			continue;
+		}
+		else if (order == "size")
+		{
+			x = q.size();
+			cout << x << '\n';
+			continue;
+		}
+		else if (order == "empty")
+		{
+			if (q.empty())
+			{
+				cout << 1 << '\n';
+				continue;
+			}
+				
+			else
+			{
+				cout << 0 << '\n';
+				continue;
+			}
+			continue;
+		}
+		else if (order == "front")
+		{
+			if (!q.empty())
+			{
+				x = q.front();
+				cout << x << '\n';
+				continue;
+			}
+			else
+			{
+				cout << -1 << '\n';
+				continue;
+			}
+			continue;
+		}
+		else if (order == "back")
+		{
+			if (!q.empty())
+			{
+				x = q.back();
+				cout << x << '\n';
+				continue;
+			}
+			else
+			{
+				cout << -1 << '\n';
+				continue;
+			}
+			continue;
+		}
+	}
+	return 0;
+}
