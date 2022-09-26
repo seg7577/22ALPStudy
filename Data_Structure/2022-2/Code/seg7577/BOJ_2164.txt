@@ -1,0 +1,27 @@
+#include <iostream>
+//#include <algorithm>
+#include<stack>
+#include<queue>
+//#include<string>
+//#include<list>
+using namespace std;
+
+int n, num;
+//시간복잡도  이중 for문 사용시 O(N^2)이 나옴 = 500.000  = > 시간초과
+int main()
+{
+	queue<int>card1, card2;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+		card1.push(i);
+//	for (int i = 0; i < n; i++)
+//		cout << "card1. : " << card1.front() << endl;
+	while (card1.size() > 1) //card가 한 장 남을 때까지 진행 하는 거임
+	{	
+		card1.pop();
+		card1.push(card1.front());
+		card1.pop();
+	}
+	cout << card1.front();
+	return 0;
+}

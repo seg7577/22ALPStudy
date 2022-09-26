@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <deque>
+
+using namespace std;
+
+int main() 
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int T;
+	cin >> T; //test case
+	for (int i = 0; i < T; i++) 
+	{
+		string rd; //함수 선언
+		cin >> rd;
+		int num;//배열의 길이 (형식상 입력 받기만 할거임 따로 쓰지는 않을 겅임)
+		cin >> num;
+		//vector<int> v; //vector 삭제 맨 앞 O(n) 맨 뒤 O(1)
+		//시간복잡도가 deque가 더 짧으므로 deque로 진행함
+		deque<int> dq;  //deque 삭제 맨 앞 O(1) 맨 뒤 O(1)
+		string s;//문자열 형태로 배열을 입력 받음
+		cin >> s;
+		string temp;
+		for (int j = 0; j < s.size(); j++) //배열의 길이만큼 반복
+		{
+			if (isdigit(s[j]))  //매개변수로 들어온 char 타입이 10진수 숫자로 변경이 가능하면 0이 아닌 숫자(true), 아니면 0(false)를 반환하는 함수 입니다.
+				temp += s[j];
+			else // 숫자로 변경이 가능한 경우 false 
+				if (temp != "") 
+				{
+					dq.push_back(stoi(temp)); //string to int 문자열을 int형으로 넣음, str타입을 int타입으로 바꾸어 숫자로 바꾸는 함수임
+					temp = "";
+				}
+		}
+
+		int error_check = 0;
+
+		int r = 0; // r이 홀수면 거꾸로, r이 짝수면 그대로 마지막쯤에 판독해서 앞 or 뒤 선택 그리고 D함수 실행
+		for (int j = 0; j < rd.size(); j++) // 명령어의 길이만큼 출력
+		{
+			if (rd[j] == 'R') 
+			{
+				r++;
+			}
+			else
+			{
+				if (dq.empty()) //dq가 비어 있을 경우 error를 출력
+				{
+					cout << "error" << "\n";
+					error_check = 1;
+					break;
+				}
+				
+				if (r % 2 == 0) //짝수 : 가장 앞 버리기
+				{
+					dq.pop_front();
+				}
+			
+				else	//홀수 : 가장 뒤 버리기 
+				{
+					dq.pop_back();
+				}
+			}
+		}
+
+		if (error_check == 0) 
+		{
+			cout << "[";
+			if (r % 2 == 1) 
+			{
+				//홀수일 때 뒤집어서 출력
+				for (int j = dq.size() - 1; j >= 0; j--) 
+				{
+					cout << dq[j];
+					if (j != 0)
+						cout << ",";
+				}
+			}
+			else {
+				for (int j = 0; j < dq.size(); j++) 
+				{
+					cout << dq[j];
+					if (j != dq.size() - 1)
+						cout << ",";
+				}
+			}
+			cout << "]" << "\n";
+		}
+	}
+
+	return 0;
+}
