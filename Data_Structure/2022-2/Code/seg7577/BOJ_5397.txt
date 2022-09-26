@@ -1,5 +1,7 @@
 #include <iostream>
-#include <algorithm>
+#include <algorithm>-100011.001
+
+
 #include<stack>
 #include<string>
 using namespace std;
