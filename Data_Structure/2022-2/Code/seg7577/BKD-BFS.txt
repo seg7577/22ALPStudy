@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <bits/stdc++.h>
+#define X first
+#define Y second
+//바킹독 BFS(Breadth First Search) : 다차원 배열에서 각 칸을 방물할 때 너비를 우선으로 방문하는 알고리즘
+//시간 복잡도는 칸이 n개일 때 = O(n)번, 행이 R이고 열이 C면 O(RC)이 됨.
+
+//BFS 구현시 실수
+//1.시작점에 방문했다는 표시를 남기지 않는다. --> 이러한 경우는 시작점을 2번 가는 경우가 발생할 수 있다.
+//2.큐에 넣을 때 방문했다는 표시를 하는 대신 큐에서 빼낼 때 방문했다는 표시를 남겼다. --> 이러한 경우에서는 같은 큐에 여러 번 들어가므로 시간초과 or 메모리 초과가 나올 수도 있다.
+//3.이웃한 원소가 범위를 벗어났는지에 대한 체크를 잘못했다.
+
+
+using namespace std;
+#define X first
+#define Y second // pair에서 first, second를 줄여서 쓰기 위해서 사용
+int board[502][502] =
+{ {1,1,1,0,1,0,0,0,0,0},
+ {1,0,0,0,1,0,0,0,0,0},
+ {1,1,1,0,1,0,0,0,0,0},
+ {1,1,0,0,1,0,0,0,0,0},
+ {0,1,0,0,0,0,0,0,0,0},
+ {0,0,0,0,0,0,0,0,0,0},
+ {0,0,0,0,0,0,0,0,0,0} }; // 1이 파란 칸, 0이 빨간 칸에 대응
+bool vis[502][502]; // 해당 칸을 방문했는지 여부를 저장
+int n = 7, m = 10; // n = 행의 수, m = 열의 수
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 }; // 상하좌우 네 방향을 의미
+int main(void)
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    queue<pair<int, int> > Q;
+    vis[0][0] = 1; // (0, 0)을 방문했다고 명시
+    Q.push({ 0,0 }); // 큐에 시작점인 (0, 0)을 삽입.
+    while (!Q.empty())//비었으면 반환값이 true가 나옴 
+    {
+        //pair:두 객체를 하나의 객체로 취급 할 수 있게 묶어주는 클래스.
+        pair<int, int> cur = Q.front(); Q.pop();
+        cout << '(' << cur.X << ", " << cur.Y << ") -> "; //방문순서를 알려줌.
+        for (int dir = 0; dir < 4; dir++) { // 상하좌우 칸을 살펴볼 것이다.
+            int nx = cur.X + dx[dir];
+            int ny = cur.Y + dy[dir]; // nx, ny에 dir에서 정한 방향의 인접한 칸의 좌표가 들어감
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue; // 범위 밖일 경우 넘어감
+            if (vis[nx][ny] || board[nx][ny] != 1) continue; // 이미 방문한 칸이거나 파란 칸이 아닐 경우
+            vis[nx][ny] = 1; // (nx, ny)를 방문했다고 명시
+            Q.push({ nx,ny });
+        }
+    }
+}

@@ -1,0 +1,68 @@
+#include <iostream>
+#include<queue>
+#include <bits/stdc++.h>
+#define X first
+#define Y second
+using namespace std;
+
+int board[505][505];//input 그림판
+bool vis[505][505];//방문 지점 표시를 위함
+
+int dx[4] = { 1, 0, -1, 0 };
+int dy[4] = { 0, 1, 0, -1 };
+//상하좌우 와리가리 치기 위함
+
+int num = 0, area = 0, mx = 0; //그림의 개수, 그림의 넓이, 그림의 넓이 중에 가장 큰값 
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) // board input
+		for (int j = 0; j < m; j++)
+			cin >> board[i][j];
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			if (board[i][j] == 0 || vis[i][j])	continue;
+			//(i, j)는 새로운 그림의 시작점 or vis가 이미 방문한 곳일 경우 continue
+
+			num++; //그림의 개수 증가
+			queue<pair<int, int>> Q;
+			Q.push({ i, j });
+			vis[i][j] = 1; //BFS의 시작점
+			area = 0;
+			while (!Q.empty()) //Q에 값이 없을 때까지 반복함
+			{
+				area++; //그림의 넓이 증가
+				pair<int, int> cur = Q.front();
+				Q.pop();
+				for (int dir = 0; dir < 4; dir++) //상하좌우를 와리가리 하면서 그림의 넓이를 확인한다.
+				{
+					int nx = cur.X + dx[dir];
+					int ny = cur.Y + dy[dir];
+					//현재의 (i, j)의 좌표에서 상하좌우를 방문하며 안 들린 곳을 찾기 위함 
+
+					if (nx < 0 || ny < 0 || nx >= n || ny >= m)	continue;
+					//nx, ny가 특정 범위가 그림판 보드 보다 커질 경우 or 음수로 갈 경우 continue
+
+					if (vis[nx][ny] || board[nx][ny] != 1)	continue;
+					//들리지 않은 곳이거나 색칠이 안된 곳이면 continue함
+
+					vis[nx][ny] = 1;
+					//위의 모든 조건에 충족 되지 못한다면 방문했다는 표시를 남김
+
+					Q.push({ nx,ny });
+				}
+			}
+			mx = max(mx, area);
+			//area가 mx 보다 클 경우 mx에  area를 저장
+		}
+	}
+	cout << num << '\n' << mx;
+	return 0;
+}
