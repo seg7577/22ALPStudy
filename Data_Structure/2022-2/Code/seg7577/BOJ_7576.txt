@@ -39,6 +39,7 @@ int main()
 	{
 		auto cur = Q.front();
 		//Q.front()는 시작에는 토마토가 있는 칸 그 이후로 부터는 익을 수 있는 칸을 push(),pop()함
+
 		Q.pop();
 		// 사면이 -1인 경우 빠져 나와야하므로 pop함
 		for (int dir = 0; dir < 4; dir++)

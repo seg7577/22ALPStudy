@@ -41,6 +41,7 @@ int main()
 			int nx = cur.X + dx[dir];
 			int ny = cur.Y + dy[dir];
 			//현재 위치에서 와리가리 하려고
+
 			if (nx < 0 || ny < 0 || nx >= n || ny >= m)	continue;
 			//nx, ny가 범위를 벗어날 경우 continue함
 
