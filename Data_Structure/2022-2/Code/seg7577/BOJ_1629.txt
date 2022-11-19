@@ -1,0 +1,50 @@
+#include <iostream>
+#define ll long long
+
+using namespace std;
+
+ll Recur(ll A, ll B, ll C) {
+	if (B == 1)	return A % C; //Base Condition
+
+	ll remainder = Recur(A, B / 2, C);
+
+	if (B % 2 == 0)	return remainder * remainder % C;
+	else 
+	{
+		//return remainder * remainder * A % C;
+		//위와 같이 작성하면 에러가 발생
+		//이유는 reaminder의 최대값은 int 양의 최대값 -1, 대략적으로 10^9이고 이 두 수를 곱하면 최소 10^18
+		//long long의 범위는 10^18이므로, reaminder의 제곱에 A를 곱할 경우 높은 확률로 오버플로우가 발생
+		remainder = remainder * remainder % C;
+		return remainder * A % C;
+	}
+}
+
+int main(void) {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	ll A, B, C;
+	cin >> A >> B >> C;
+
+	cout << Recur(A, B, C);
+}
+
+//			recursion(재귀)
+/*
+* : 하나의 함수에서 자기 자신을 다시 호출해 작업을 수행하는 알고리즘
+*
+* 수학적 귀납법 : 1번 도미노가 쓰러짐 -> K번 도미노가 쓰러진다 -> K+1번 도미노가 쓰러지므로 참이다.
+*				, 우리는 이러한 것으로 1번 쓰러짐 and K번 도미노가 쓰러짐 = 모든 도미노가 쓰러진다 라는 결론을 도출할 수 있음
+*
+* 올바른 재귀 조건
+* 1.특정 입력에 대해서는 자기 자신을 호출하지 않고 종료 되어야 한다. (Base Condition)
+* 2.모든 입력은 Base Condition으로 수렴해야 한다.
+*
+* 재귀 함수는 꽤 비용이 큰 연산이므로 메모리와 시간에서는 큰 손해를 본다.
+*
+* 재귀 작성 요령
+* 1. 함수의 인자로 어떤 것을 받고 어디까지 계산한 후 자기 자신에게 넘겨줄지 명확하게 정해야 함
+* 2. 모든 재귀함수는 반복문으로 동일한 동작을 하는 함수를 만들 수 있음
+* 3. 한 함수가 자기 자신을 여러 번 호출하면 비효율적일 수 있음 -> 37번째 줄 참고(피보나치 함수)
+*/
