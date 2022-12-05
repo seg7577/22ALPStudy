@@ -1,0 +1,47 @@
+//BOJ - 1991 - 트리 순회
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int lc[300]; //left child
+int rc[300];//right child
+
+void preorder(int cur)
+{
+	cout << (char)cur;
+	if (lc[cur] != 0)	preorder(lc[cur]);
+	if (rc[cur] != 0)	preorder(rc[cur]);
+}
+void Inorder(int cur)
+{
+	if (lc[cur] != 0)	Inorder(lc[cur]);
+	cout << (char)cur;
+	if (rc[cur] != 0)	Inorder(rc[cur]);
+}
+void Postorder(int cur)
+{
+	if (lc[cur] != 0)	Postorder(lc[cur]);
+	if (rc[cur] != 0)	Postorder(rc[cur]);
+	cout << (char)cur;
+}
+int main()
+{
+	//root = A
+	int n;
+	char node1, node2, node3;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> node1 >> node2 >> node3;
+		if (node2 != '.')	lc[node1] = node2;
+		if (node3 != '.')	rc[node1] = node3;
+	}
+	preorder('A');
+	cout << '\n';
+	Inorder('A');
+	cout << '\n';
+	Postorder('A');
+
+}
